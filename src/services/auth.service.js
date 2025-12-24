@@ -5,10 +5,19 @@ export const authService = {
         const res = await fetch(`${API_URL}/auth/signup`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+            body: JSON.stringify({
+                username: data.username,
+                password: data.password,
+                email: data.email,
+                given_name: data.given_name,
+                family_name: data.family_name,
+                gender: data.gender,
+                phone_number: data.phone_number
+            }),
         });
-        if (!res.ok) throw new Error('Signup failed');
-        return res.json();
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.message || 'Signup failed');
+        return result;
     },
 
     async confirmSignup(username, code) {
@@ -17,8 +26,9 @@ export const authService = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, confirmation_code: code }),
         });
-        if (!res.ok) throw new Error('Confirmation failed');
-        return res.json();
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.message || 'Confirmation failed');
+        return result;
     },
 
     async login(email, password) {
@@ -27,8 +37,9 @@ export const authService = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
         });
-        if (!res.ok) throw new Error('Login failed');
-        return res.json();
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.message || 'Login failed');
+        return result;
     },
 
     async refreshToken(token) {
@@ -37,7 +48,8 @@ export const authService = {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refresh_token: token }),
         });
-        if (!res.ok) throw new Error('Refresh failed');
-        return res.json();
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.message || 'Refresh failed');
+        return result;
     }
 };

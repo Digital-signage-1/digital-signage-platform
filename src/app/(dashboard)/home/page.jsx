@@ -1,8 +1,21 @@
 'use client';
 
+import { useAuth } from '@/context/AuthContext';
+
 export default function HomePage() {
+    const { user } = useAuth();
+
     return (
         <div className="space-y-6">
+            <div className="flex items-center justify-between mb-2">
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-900">
+                        Welcome back, {user?.given_name || user?.email?.split('@')[0] || 'User'}!
+                    </h1>
+                    <p className="text-sm text-gray-500">Here's what's happening with your digital signage today.</p>
+                </div>
+            </div>
+
             {/* Section 1: Subscription Warning Banner */}
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 flex items-center justify-between shadow-sm">
                 <div className="flex items-center">
@@ -101,9 +114,9 @@ export default function HomePage() {
                                         <td key={j} className="px-4 py-3">
                                             {item !== '-' ? (
                                                 <span className={`px-2 py-1 rounded text-xs font-semibold ${item === 'Default' ? 'bg-blue-100 text-blue-700' :
-                                                        item === 'Promo' ? 'bg-purple-100 text-purple-700' :
-                                                            item === 'Alert' ? 'bg-red-100 text-red-700' :
-                                                                'bg-gray-100 text-gray-700'
+                                                    item === 'Promo' ? 'bg-purple-100 text-purple-700' :
+                                                        item === 'Alert' ? 'bg-red-100 text-red-700' :
+                                                            'bg-gray-100 text-gray-700'
                                                     }`}>
                                                     {item}
                                                 </span>
